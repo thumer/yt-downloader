@@ -62,7 +62,7 @@ public partial class MainWindow : Window
             StatusText.Text = "Lade yt‑dlp …";
             try
             {
-                await DownloadFileAsync("https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe", ydPath);
+                await DownloadFileAsync(Settings.Default.YtDlpUrl, ydPath);
             }
             catch (Exception ex)
             {
@@ -75,8 +75,11 @@ public partial class MainWindow : Window
             StatusText.Text = "Lade ffmpeg …";
             try
             {
-                await DownloadFileAsync("https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip", new FileInfo(ffPath).DirectoryName, unzip: true);
-                File.Move("ffmpeg-master-latest-win64-gpl\\bin\\ffmpeg.exe", "tools\\ffmpeg.exe");
+                await DownloadFileAsync(Settings.Default.FfmpegUrl, new FileInfo(ffPath).DirectoryName!, unzip: true);
+                string tempDir = Path.Combine(_toolsDir, Path.GetFileNameWithoutExtension(new Uri(Settings.Default.FfmpegUrl).AbsolutePath));
+                File.Move(Path.Combine(tempDir, "bin", "ffmpeg.exe"), ffPath, overwrite: true);
+                if (Directory.Exists(tempDir))
+                    Directory.Delete(tempDir, true);
             }
             catch (Exception ex)
             {
