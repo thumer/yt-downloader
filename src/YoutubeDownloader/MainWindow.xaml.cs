@@ -35,7 +35,6 @@ public partial class MainWindow : Window
             FFmpegPath = ffPath,
             OutputFolder = _toolsDir // fallback
         };
-
         EnsureToolsAsync().ConfigureAwait(false);
 
         PathTextBox.Text = Settings.Default.SavePath;
@@ -77,7 +76,7 @@ public partial class MainWindow : Window
             try
             {
                 await DownloadFileAsync("https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip", new FileInfo(ffPath).DirectoryName, unzip: true);
-                File.Move("tools\\ffmpeg-master-latest-win64-gpl\\bin\\ffmpeg.exe", "tools\\ffmpeg.exe");
+                File.Move("ffmpeg-master-latest-win64-gpl\\bin\\ffmpeg.exe", "tools\\ffmpeg.exe");
             }
             catch (Exception ex)
             {
@@ -86,6 +85,7 @@ public partial class MainWindow : Window
         }
 
         StatusText.Text = string.Empty;
+        DownloadButton.IsEnabled = true;
     }
 
     private static async Task DownloadFileAsync(string url, string destination, bool unzip = false)

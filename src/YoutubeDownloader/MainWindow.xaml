@@ -32,7 +32,7 @@
         </StackPanel>
 
         <!-- Zeile 3: Download-Button -->
-        <Button Grid.Row="3" x:Name="DownloadButton" Content="Download" Width="140" Height="34"
+        <Button Grid.Row="3" x:Name="DownloadButton" Content="Download" Width="140" Height="34" IsEnabled="False"
                 HorizontalAlignment="Right" Click="DownloadButton_Click"/>
     </Grid>
 </Window>
