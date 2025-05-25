@@ -1,0 +1,47 @@
+name: build-and-release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore yt-downloader.sln
+
+      - name: Publish application
+        run: dotnet publish src/YoutubeDownloader/YoutubeDownloader.csproj -c Release -r win-x64 --self-contained false -o publish
+
+      - name: Archive binaries
+        run: Compress-Archive -Path publish/* -DestinationPath package.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: yt-downloader
+          path: package.zip
+
+      - name: Bump version and create tag
+        id: tag
+        uses: anothrNick/github-tag-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: package.zip
+          tag: ${{ steps.tag.outputs.new_tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
