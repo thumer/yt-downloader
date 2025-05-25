@@ -1,0 +1,38 @@
+﻿<Window x:Class="YoutubeDownloader.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="YouTube → MP3 Downloader" Height="260" Width="560"
+        MinHeight="260" MinWidth="560">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Zeile 0: Link -->
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="YouTube-Link:" VerticalAlignment="Center" />
+            <TextBox x:Name="LinkTextBox" Margin="10,0,0,0" Width="400"
+                     AllowDrop="True"/>
+        </StackPanel>
+
+        <!-- Zeile 1: Zielordner -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="Zielordner:" VerticalAlignment="Center" />
+            <TextBox x:Name="PathTextBox" Margin="17,0,0,0" Width="350" />
+            <Button Content="…" Width="30" Click="Browse_Click" />
+        </StackPanel>
+
+        <!-- Zeile 2: Fortschritt -->
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <ProgressBar x:Name="Progress" Height="18" Minimum="0" Maximum="100" />
+            <TextBlock x:Name="StatusText" FontSize="12"/>
+        </StackPanel>
+
+        <!-- Zeile 3: Download-Button -->
+        <Button Grid.Row="3" x:Name="DownloadButton" Content="Download" Width="140" Height="34"
+                HorizontalAlignment="Right" Click="DownloadButton_Click"/>
+    </Grid>
+</Window>
