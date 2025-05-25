@@ -34,5 +34,29 @@ namespace YoutubeDownloader.Properties {
                 this["SavePath"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe")]
+        public string YtDlpUrl {
+            get {
+                return ((string)(this["YtDlpUrl"]));
+            }
+            set {
+                this["YtDlpUrl"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip")]
+        public string FfmpegUrl {
+            get {
+                return ((string)(this["FfmpegUrl"]));
+            }
+            set {
+                this["FfmpegUrl"] = value;
+            }
+        }
     }
 }

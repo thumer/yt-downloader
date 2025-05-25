@@ -5,5 +5,11 @@
     <Setting Name="SavePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="YtDlpUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe</Value>
+    </Setting>
+    <Setting Name="FfmpegUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://github.com/yt-dlp/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
