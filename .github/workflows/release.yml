@@ -31,6 +31,16 @@ jobs:
           name: yt-downloader
           path: package.zip
 
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: yt-downloader
+          path: .
+
       - name: Bump version and create tag
         id: tag
         uses: anothrNick/github-tag-action@v1
