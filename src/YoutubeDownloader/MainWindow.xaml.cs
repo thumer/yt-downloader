@@ -4,6 +4,7 @@
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
+using System.IO.Compression;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -75,9 +76,16 @@ public partial class MainWindow : Window
             StatusText.Text = "Lade ffmpeg …";
             try
             {
-                await DownloadFileAsync(Settings.Default.FfmpegUrl, new FileInfo(ffPath).DirectoryName!, unzip: true);
                 string tempDir = Path.Combine(_toolsDir, Path.GetFileNameWithoutExtension(new Uri(Settings.Default.FfmpegUrl).AbsolutePath));
-                File.Move(Path.Combine(tempDir, "bin", "ffmpeg.exe"), ffPath, overwrite: true);
+                if (Directory.Exists(tempDir))
+                    Directory.Delete(tempDir, true);
+
+                string ffDownloadBase = Path.Combine(_toolsDir, "ffmpeg_download");
+                await DownloadFileAsync(Settings.Default.FfmpegUrl, ffDownloadBase, unzip: true);
+
+                string extracted = Path.Combine(tempDir, "bin", "ffmpeg.exe");
+                if (File.Exists(extracted))
+                    File.Move(extracted, ffPath, overwrite: true);
                 if (Directory.Exists(tempDir))
                     Directory.Delete(tempDir, true);
             }
@@ -98,9 +106,9 @@ public partial class MainWindow : Window
 
         if (unzip)
         {
-            string zipPath = destination + ".zip";
+            string zipPath = Path.ChangeExtension(destination, "zip");
             await File.WriteAllBytesAsync(zipPath, data);
-            System.IO.Compression.ZipFile.ExtractToDirectory(zipPath, Path.GetDirectoryName(destination)!);
+            ZipFile.ExtractToDirectory(zipPath, Path.GetDirectoryName(destination)!, overwriteFiles: true);
             File.Delete(zipPath);
         }
         else
